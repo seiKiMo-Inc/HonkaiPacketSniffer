@@ -98,7 +98,8 @@ def print_packet(parsed_packet, args):
     # Content
     print(f"{parsed_packet['parsed']['body_parsed']}")
 
-    print("-" * os.get_terminal_size().columns)
+    # Separator
+    print("-" * (os.get_terminal_size().columns - 1))
 
 
 def read_from_pcap(args):
@@ -142,9 +143,9 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--pcap", dest="pcap", required=False, help="The input PCAP file to read packets from.")
+    parser.add_argument("--pcap", dest="pcap", required=False, help="The input PCAP file to read packets from. If none is specified, sniff from the network interface instead.")
     parser.add_argument("--output", dest="output", required=False, help="The output JSON file to which the packets should be written.")
-    parser.add_argument("--exclude", dest="excluded", nargs="+", required=False, help="A list of packets that should be excluded from terminal output. They will still be in the outputted JSON file.")
+    parser.add_argument("--exclude", dest="excluded", nargs="+", required=False, default=[], help="A list of packets that should be excluded from terminal output. They will still be written to the outputted JSON file.")
     args = parser.parse_args()
 
     main(args)
